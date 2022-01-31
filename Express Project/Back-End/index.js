@@ -55,7 +55,7 @@ app.get("/age", cors(corsOptions), (req, res) => {
     });
 });
 
-app.get("/major", (req, res) => {
+app.get("/major", cors(corsOptions), (req, res) => {
     const readFile = util.promisify(fs.readFile);
     readFile("./data/aboutMe.json")
     .then((text) => {
@@ -67,7 +67,7 @@ app.get("/major", (req, res) => {
     });
 });
 
-app.get("/address", (req, res) => {
+app.get("/address", cors(corsOptions), (req, res) => {
     const readFile = util.promisify(fs.readFile);
     readFile("./data/aboutMe.json")
     .then((text) => {
@@ -79,12 +79,25 @@ app.get("/address", (req, res) => {
     });
 });
 
-app.get("/myDescription", (req, res) => {
+app.get("/myDescription", cors(corsOptions), (req, res) => {
     const readFile = util.promisify(fs.readFile);
     readFile("./data/aboutMe.json")
     .then((text) => {
         const data = JSON.parse(text.toString("utf8"));
         res.send(data.myDescription);
+    })
+    .catch((err) => {
+        console.log("Error", err);
+    });
+});
+
+  
+app.get("/email", cors(corsOptions), (req, res) => {
+    const readFile = util.promisify(fs.readFile);
+    readFile("./data/aboutMe.json")
+    .then((text) => {
+        const data = JSON.parse(text.toString("utf8"));
+        res.send(data.email);
     })
     .catch((err) => {
         console.log("Error", err);
