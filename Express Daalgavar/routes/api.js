@@ -1,110 +1,99 @@
-const express = require("express");
-const app = express();
+const express = require("express")
 const fs = require("fs");
-
+const app = express();
 const router = express.Router();
-
-router.get("/user/:id", log, (req, res, next) => {
-    const user_id = req.params.id;
-    if(user_id>2000) next("route");
-    if(user_id<50) next();
-    res.send("i will send user information #1");
-}, function(req, res, next) {
-    res.send("i will send user information #1.1");
-});
-
-router.get("/user/:id", log, (req, res) => {
-    res.send('i will send user information #2');
-});
-
-function logOriginalUrl(req, res, next) {
-    console.log("Request URL:", req.originalUrl);
-    next();
-}
-
-function logMethod(req, res, next) {
-    console.log("Request Type:", req.method);
-    next();
-}
-
-function log(req, res, next) {
-    const content = req.originalUrl;
-    fs.writeFile("/Users/lab_1_02/Desktop/Quotes/public/user_activity_log.json",
-    req.originalUrl+"\n", 
-    {flag: "a+"}, 
-    (err) => {});
-    // fs.appendFile("/Users/lab_1_02/Desktop/Quotes/public/user_activity_log.json",
-    // req.originalUrl+"\n", 
-    // (err) => {})
-    next()
-}
-
-var logStuff = [logOriginalUrl, logMethod];
-router.get("/arrayuser/:id", (req, res, next) => {
-    res.send("User Info");
-});
+const {books} = require("../public/book.json");
 
 
-
-
-                                    //Error Handling
-
-//Error send to user
-
-router.get("/userid/:id", function (req, res, next) {
-    const id = req.params.id;
-    if(id < 10) {
-        const err = new Error('Can\'t find user with this ID!');
-        err.status = 'fail';
-        err.statusCode = 500;
-        return next(err);
+router.get("/random", (req, res, next) => {
+    let a = [];
+    var random = Math.floor(Math.random() * books.length);
+    for (i = 0; i < 3; i++) {
+        while(a.includes(random) > 0){
+            random = Math.floor(Math.random() * books.length);
+        }
+        a.push(books[random]);
     }
-    res.send("User Info with ID" + id);
+    res.send(a);
 });
 
-//Error user1
+router.get("/sort", (req, res, next) => {
+    let result = books.sort((a,b)=> new Date(b.published).getTime() - new Date(a.published).getTime());
+    res.send(result);
+});
 
-router.get("/user1/:id", function (req, res, next) {
-    const id = req.params.id;
-    if(id < 10) {
-        const err = new Error('Can\'t find user with this ID!');
-        err.status = 'fail';
-        return next(err);
+router.get("/names", (req, res, next) => {
+    let names = [];
+    books.map((name) => {
+        names += name.author;
+    })
+    res.send(names);
+})
+
+router.get("/allbooks", (req, res) =>{
+    res.send(books);
+})
+
+router.get("/book/:isbn", (req, res, next) => {
+    const isbn = req.params.isbn;
+    const isbnNumber = books.filter((isbnNumber) => {
+        return isbnNumber.isbn === isbn
+    })
+    res.send(isbnNumber)
+});
+
+router.get("/search", (req, res, next) => {
+    const title = req.query.title.toLowerCase();
+    const search = books.filter((search) => {
+        return search.title.toLowerCase().includes(title)
+    })
+    res.send(search)
+});
+
+router.get("/search", (req, res, next) => {
+    const title = req.query.title.toLowerCase();
+    const search = books.filter((search) => {
+        return search.title.toLowerCase().includes(title)
+    })
+    res.send(search)
+});
+
+router.get("/page/:type", (req, res, next) => {
+    if (req.params.type == 'min') {
+        next();
     }
-    res.send("User Info with ID " + id);
-}, function (err, req, res, next) {
-    res.status(500).json({"message": err.status});
+    let a = [];
+    const max = books.filter((page) => {
+         a.push(page.pages);
+    })
+    const Max = Math.max(...a);
+    let book = books.filter((pageMax) => {
+        return pageMax.pages == Max;
+    })
+    
+    res.send(book);
+}, (req, res) => {
+    let a = [];
+    const min = books.filter((page) => {
+         a.push(page.pages);
+    })
+    const Min = Math.min(...a);
+    let book = books.filter((pageMin) => {
+        return pageMin.pages == Min;
+    })
+    res.send(book);
 });
 
-//Error user2 without next
-
-router.get("/user2/:id", function (req, res ) {
-    const id = req.params.id;
-    if(id < 10) {
-        return res.status(500).json({"messgae": "something went wrong!"});
-    }
-    res.send("User Info with ID " + id);
+router.get("/publisher", (req, res, next) => {
+    const publish = books.map((publish) => {
+         return publish.publisher;
+    })
+    const counts = {};
+    publish.forEach(function (x) { 
+        counts[x] = (counts[x] || 0) + 1; 
+    });
+    res.send(counts)
 });
-
-//Error user3 using router.use()
-
-router.get("/user3/:id", function (req, res, next) {
-    const id = req.params.id;
-    if(id < 10) {
-        const err = new Error('Can\'t find user with this ID!');
-        err.status = 'fail';
-        err.statusCode = 500;
-        return next(err);
-    }
-    res.send("User Info with ID" + id);
-});
-     
-router.use(function (err, req, res, next) {
-    res.status(500).json({"err": err, "message": "Wrong of course!", "custom": err.status});
-})  // next(err) гэж дамжуулсан бүгд энд баригдана
-
-//Error user4 
-
 
 
 module.exports = router;
