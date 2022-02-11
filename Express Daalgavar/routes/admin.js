@@ -11,13 +11,7 @@ app.get("/", function(req, res) {
     res.render("index", {name:"Zulaa"});
 })
 
-// const {quotes} = require("./public/data.json");
-// const newData = require("../public/book.json");
-// app.use("/books", (req, res) =>{
-//     res.render("books", newData);
-// })
-// app.use("/book/:id",(req, res) => {
-//     res.render("book", {book: newData.books[req.params.title]})
-// })
+const {books} = require("../public/book.json");
+
 
 module.exports = app;
