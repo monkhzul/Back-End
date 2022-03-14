@@ -1,0 +1,30 @@
+
+.orders {
+    border: 1px solid rgb(220, 223, 221);
+    height: 100vh;
+    position: fixed;
+}
+.content {
+    height: 75vh;
+}
+#menu-tab .nav-link {
+    color: #d86464 !important;
+    font-weight: 700 !important;
+    padding: 8px 16px !important;
+    transition: ease-in-out 0.3s;
+}
+#menu-tab .active {
+    color: #8d1111 !important;
+    border-bottom: #d86464 1px solid !important;
+    transition: ease-in-out 0.3s;
+}
+#menu-tab {
+    overflow: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}
+@media (min-width: 992px) {
+    #menu-tab::-webkit-scrollbar{
+        display: none;
+    }
+}
