@@ -1,97 +1,164 @@
-show databases;
-use food_delivery;
+-- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
+--
+-- Host: 127.0.0.1    Database: food_delivery
+-- ------------------------------------------------------
+-- Server version	8.0.28
 
-/* food */
-CREATE TABLE food(
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-name varchar(255),
-price int,
-portion int,
-discount int,
-stock int
-);
-ALTER TABLE food ADD category_id int;
-/* UPDATE food SET category_id=2 WHERE id BETWEEN 7 AND 8; */
-UPDATE food SET discount=15 WHERE category_id=1;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO food(name, price, portion, discount, stock)
-VALUES ('Zairmag', '5500', '5', '30', '5');
-SELECT * FROM food;
-/* DELETE FROM food WHERE id=''; */
-UPDATE food SET price=3000 WHERE id=6;
+--
+-- Table structure for table `food`
+--
 
+DROP TABLE IF EXISTS `food`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `food` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `portion` int DEFAULT NULL,
+  `discount` int DEFAULT NULL,
+  `stock` int DEFAULT NULL,
+  `foodCategoryId` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/* food category */
-CREATE TABLE food_category(
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-name varchar(255),
-type varchar(255),
-color char
-);
+--
+-- Dumping data for table `food`
+--
 
-INSERT INTO food_category(name)
-VALUES ('Amttan');
-SELECT * FROM food_category;
+LOCK TABLES `food` WRITE;
+/*!40000 ALTER TABLE `food` DISABLE KEYS */;
+INSERT INTO `food` VALUES (1,'Buuz',1000,1,15,200,1),(2,'Khuushuur',1200,2,15,150,1),(3,'Oroomog',1500,4,15,100,1),(4,'Guliyash',10500,4,10,100,1),(5,'Tsuivan',9900,3,15,100,1),(6,'Bansh',3000,4,15,100,1),(7,'Luuvan salad',2500,4,0,10,2),(8,'Niislel salad',3500,3,0,15,2),(9,'Zairmag',5500,5,30,5,3),(12,'Holimog huurga',10200,1,10,50,1);
+/*!40000 ALTER TABLE `food` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/* users */
-CREATE TABLE users(
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-name varchar(255),
-email varchar(255),
-phone int,
-address varchar(255),
-role int
-);
+--
+-- Table structure for table `food_category`
+--
 
-INSERT INTO users(name, email, phone, address, role)
-VALUES ('Bayraa', 'bayr@yahoo.com', '12983476', 'Mongolia, UB', '3');
-SELECT * FROM users;
+DROP TABLE IF EXISTS `food_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `food_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `color` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/* orders */
-CREATE TABLE orders(
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-customer_id int NOT NULL,
-deliverman_id int NOT NULL,
-ordered_date date,
-order_status varchar(255),
-total_fee int
-);
+--
+-- Dumping data for table `food_category`
+--
 
-INSERT INTO orders(customer_id, deliverman_id, ordered_date, order_status, total_fee)
-VALUES (2, 2, curdate(), 'ordering', 75000);
-SELECT * FROM orders;
+LOCK TABLES `food_category` WRITE;
+/*!40000 ALTER TABLE `food_category` DISABLE KEYS */;
+INSERT INTO `food_category` VALUES (1,'Undsen hool',NULL,NULL),(2,'Salad ba Zuush',NULL,NULL),(3,'Amttan',NULL,NULL);
+/*!40000 ALTER TABLE `food_category` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/* order_detail */
-CREATE TABLE order_detail(
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-food_id int NOT NULL,
-food_price int,
-order_id int NOT NULL
-);
+--
+-- Table structure for table `order_detail`
+--
 
-INSERT INTO order_detail(food_id, food_price, order_id)
-VALUES (4, 1500, 1);
-SELECT * FROM order_detail;
+DROP TABLE IF EXISTS `order_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `food_id` int NOT NULL,
+  `food_price` int DEFAULT NULL,
+  `order_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `order_detail`
+--
 
-show tables;
+LOCK TABLES `order_detail` WRITE;
+/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+INSERT INTO `order_detail` VALUES (1,2,8900,2),(2,4,1500,1),(3,1,4600,3),(4,3,6800,3),(5,5,6800,3),(6,5,6800,5),(7,2,9800,5),(8,2,9800,7);
+/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `orders`
+--
 
-SELECT * FROM food WHERE name='Buuz';
-SELECT name FROM food WHERE price=1500;
-SELECT name, price, discount FROM food WHERE discount<20;
-SELECT * FROM food WHERE name LIKE "%salad%";
-SELECT * FROM food_category WHERE name='Salad ba Zuush' and name='Amttan';
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `deliverman_id` int NOT NULL,
+  `ordered_date` date DEFAULT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
+  `total_fee` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-SELECT * FROM food ORDER BY price DESC LIMIT 1;
-SELECT * FROM food ORDER BY price ASC LIMIT 1;
-SELECT * FROM food WHERE category_id = 1 ORDER BY price ASC LIMIT 1;
-SELECT * FROM food WHERE category_id = 1 ORDER BY price DESC LIMIT 1;
+--
+-- Dumping data for table `orders`
+--
 
-SELECT category_id FROM food GROUP BY category_id;
-SELECT category_id, count(category_id) FROM food GROUP BY category_id;
-SELECT category_id, count(category_id) AS Number FROM food GROUP BY category_id;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,1,'2022-02-16','ordered',23500),(2,2,2,'2022-02-16','ordering',75000),(3,1,2,'2022-03-01','1',5000);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
 
-SELECT category_id, count(category_id) AS Number FROM food GROUP BY category_id HAVING count(category_id) > 1;
+--
+-- Table structure for table `users`
+--
 
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` int DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `role` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Munkhzul','zulaa@gmail.com',12345678,'Mongolia, UB',1),(2,'Boldoo','bold@gmail.com',87654321,'Mongolia, UB',2),(3,'Bayraa','bayr@yahoo.com',12983476,'Mongolia, UB',3);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-03-16 12:59:47
