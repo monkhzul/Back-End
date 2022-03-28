@@ -1,27 +1,27 @@
-const { Sequelize, DataTypes } = require('@sequelize/core');
-const sequelize = require('../database.js');
+// const { Sequelize, DataTypes } = require('@sequelize/core');
+// const sequelize = require('../database.js');
 
-const Order_Detail = sequelize.define('order_detail', {
+const Order_Detail = (sequelize, Sequelize)=> {sequelize.define('order_detail', {
   // columns
   food_id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   food_price: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   order_id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false
   }
   }, {
   // Other model options go here
   timestamps: false
 });
-
-async () => {
-  await Order_Detail.sync({alter: true});
 }
+// async () => {
+//   await Order_Detail.sync({alter: true});
+// }
 
 module.exports = Order_Detail;

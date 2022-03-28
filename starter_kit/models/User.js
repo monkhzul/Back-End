@@ -1,22 +1,22 @@
-const { Sequelize, DataTypes } = require('@sequelize/core');
-const sequelize = require('../database.js');
+// const { Sequelize, DataTypes } = require('@sequelize/core');
+// const sequelize = require('../database.js');
 
-const User = sequelize.define('user', {
+const User =(sequelize, Sequelize) => { sequelize.define('user', {
   // columns
   name: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   email: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   phone: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   address: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   role: {
@@ -27,9 +27,9 @@ const User = sequelize.define('user', {
   // Other model options go here
   timestamps: false
 });
-
-async () => {
-  await User.sync({alter: true});
 }
+// async () => {
+//   await User.sync({alter: true});
+// }
 
 module.exports = User;

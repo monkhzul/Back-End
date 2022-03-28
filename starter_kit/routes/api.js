@@ -43,7 +43,7 @@ const CategoryController = require("../controller/CategoryController");
 
 const MiddlewareFood = require("../middleware/create_update");
 
-router.use('/foods', FoodController.allFood );
+router.get('/foods', FoodController.allFood );
 router.use('/create_foods', MiddlewareFood.createfood(),FoodController.createFood );
 router.use('/expensive_foods', FoodController.priceCondition);
 router.use('/update_foods/:id', FoodController.updateFood);

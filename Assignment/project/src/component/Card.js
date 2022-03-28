@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState  } from 'react';
 import Busket from '../component/Busket';
-import Menu from '../component/Menu';
 import "../css/style.css";
 
 function CardComponent() {
@@ -19,13 +18,13 @@ function CardComponent() {
   }, []);
   return (
     <div className='row d-flex mx-2'>
-    <div className="productList col-8">
+    <div className="productList col-8 mt-4">
         <div>
-          <Menu />
+          {/* <Menu /> */}
         </div>
         <div className="row">
           {menu.map((data) => (
-              <div className="col-6 col-md-3">
+              <div className="col-6 col-md-3 mt-3">
               <Card sx={{ maxWidth: 200 }}>
             <CardMedia
               component="img"
@@ -38,11 +37,10 @@ function CardComponent() {
                 {data.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-              {data.recipe}
+              {/* {data.recipe} */}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="medium">Share</Button>
               <Button size="medium">Сагслах</Button>
             </CardActions>
           </Card>

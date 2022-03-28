@@ -1,18 +1,15 @@
-const { Sequelize, DataTypes } = require('@sequelize/core');
-const sequelize = require('../database.js');
-
-const Food_Category = sequelize.define('food_category', {
+const Food_Category = (sequelize, Sequelize) => {sequelize.define('food_category', {
   // columns
   name: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   type: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   color: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   }
   }, {
@@ -21,8 +18,8 @@ const Food_Category = sequelize.define('food_category', {
   freezeTableName: true
 });
 
-async () => {
-  await Food_Category.sync({alter: true});
+// async () => {
+//   await Food_Category.sync({alter: true});
+// }
 }
-
 module.exports = Food_Category;

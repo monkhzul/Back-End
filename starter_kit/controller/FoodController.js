@@ -1,19 +1,14 @@
 const express = require("express");
-const Food = require("../models/Food");
-const Food_Category = require('../models/Food_Category');
+const db = require("../models");
+const Food = db.Food;
 const {Op} = require('sequelize');
 
 const get_foods = (req, res, next) => {};
 
-const allFood = (req, res, next) => {
-  Food.findAll({include: [
-    {
-      model: Food_Category,
-    },  
-  ],
-})
-  .then((data) => res.json({data:data}))
-  .catch((err) => res.json({data:err}))
+const allFood = (req, res) => {
+  Food.findAll()
+  .then((data) => res.send(data))
+  .catch((err) => res.json({message:err.message}))
 };
 const createFood = (req, res) => {
   Food.create(req.body)

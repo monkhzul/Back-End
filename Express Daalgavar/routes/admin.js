@@ -13,5 +13,10 @@ app.get("/", function(req, res) {
 
 const {books} = require("../public/book.json");
 
+app.get("/books", function(req, res) {
+    res.render("books", {books});
+})
+
+
 
 module.exports = app;
